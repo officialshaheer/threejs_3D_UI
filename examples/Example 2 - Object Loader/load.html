@@ -56,21 +56,24 @@ h1 {
 
         var box = getBox(1, 1, 1);
         var plane = getPlane(20);
-        var pointLight = getPointLight(1);
+        // var pointLight = getPointLight(1);
         var sphere = getSphere(0.05);
+        var rectLight = getRectLight(1,10,10); //Realistic Light
 
         plane.rotation.x = Math.PI/2;
         box.position.y = 0.5;
-        pointLight.position.y = 1.25;
+        rectLight.rotation.z = Math.PI/2;
+        // pointLight.position.y = 1.25;
 
         // adding Interactive controllers with datGUI library
-        gui.add(pointLight, 'intensity', 0,10);
-        gui.add(pointLight.position,'y', 1, 5);
+        gui.add(rectLight, 'intensity', 0,10);
+        gui.add(rectLight.position,'y', 1, 5);
 
         scene.add(box);
         scene.add(plane);
-        pointLight.add(sphere);
-        scene.add(pointLight);
+        // pointLight.add(sphere);
+        // scene.add(pointLight);
+        scene.add(rectLight);
 
         var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
         camera.position.x = 1;
@@ -99,7 +102,7 @@ h1 {
 
         function getBox(w,h,d) {
             var geometry = new THREE.BoxGeometry(w,h,d);
-            var material = new THREE.MeshPhongMaterial({
+            var material = new THREE.MeshStandardMaterial({
                 color:'rgb(120,120,120)'
             });
             var mesh = new THREE.Mesh(geometry,material);
@@ -108,7 +111,7 @@ h1 {
         }
         function getPlane(size) {
             var geometry = new THREE.PlaneGeometry(size, size);
-            var material = new THREE.MeshPhongMaterial({
+            var material = new THREE.MeshStandardMaterial({
                 color:'rgb(120,120,120)',
                 side: THREE.DoubleSide
             });
@@ -129,7 +132,13 @@ h1 {
             var mesh = new THREE.Mesh(geometry,material);
             return mesh;
         }
-
+        function getRectLight(i,w,h) {
+            var rectLight = new THREE.RectAreaLight( 0xffffff, i, w, h );
+            rectLight.position.set( 0,2,0);
+            rectLight.lookAt( box.position);
+            // rectLight.castShadow = true;
+            return rectLight;
+        }
         // Initialising renderer & Fixing the resizing of object with below function
         var render = function() {
             requestAnimationFrame(render);
