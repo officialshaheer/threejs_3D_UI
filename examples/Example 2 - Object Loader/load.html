@@ -56,23 +56,25 @@ h1 {
 
         var box = getBox(1, 1, 1);
         var plane = getPlane(20);
-        // var pointLight = getPointLight(1);
+        var pointLight = getPointLight(1);
         var sphere = getSphere(0.05);
         var rectLight = getRectLight(1,10,10); //Realistic Light
+        var rectLightContainer = getRectLightPlane(0.25);
 
         plane.rotation.x = Math.PI/2;
         box.position.y = 0.5;
         rectLight.rotation.z = Math.PI/2;
-        // pointLight.position.y = 1.25;
+        pointLight.position.y = 5;
 
         // adding Interactive controllers with datGUI library
         gui.add(rectLight, 'intensity', 0,10);
-        gui.add(rectLight.position,'y', 1, 5);
+        gui.add(rectLight.position,'y', 1, 50);
 
         scene.add(box);
         scene.add(plane);
-        // pointLight.add(sphere);
-        // scene.add(pointLight);
+        pointLight.add(sphere);
+        scene.add(pointLight);
+        rectLight.add(rectLightContainer);
         scene.add(rectLight);
 
         var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
@@ -83,7 +85,7 @@ h1 {
 
         var renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.shadowMap.enabled = true; //For Shadows
-        renderer.setClearColor('rgb(120,120,120)');
+        renderer.setClearColor('rgb(0,0,0)');
         renderer.setSize(window.innerWidth,window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
@@ -102,23 +104,36 @@ h1 {
 
         function getBox(w,h,d) {
             var geometry = new THREE.BoxGeometry(w,h,d);
-            var material = new THREE.MeshStandardMaterial({
-                color:'rgb(120,120,120)'
-            });
+            var material = new THREE.MeshStandardMaterial( {color:'rgb(120,120,120)',roughness: 0.0,
+                metalness: 0.0} );
             var mesh = new THREE.Mesh(geometry,material);
             mesh.castShadow = true; // for emitting Shadows
             return mesh;
         }
+
         function getPlane(size) {
             var geometry = new THREE.PlaneGeometry(size, size);
             var material = new THREE.MeshStandardMaterial({
                 color:'rgb(120,120,120)',
-                side: THREE.DoubleSide
+                side: THREE.DoubleSide,                
+                roughness: 0.0,
+                metalness: 0.9
             });
             var mesh = new THREE.Mesh(geometry,material);
             mesh.receiveShadow = true; // For recieving Shadows
             return mesh;
         }
+
+        function getRectLightPlane(size) {
+            var geometry = new THREE.PlaneGeometry(size, size);
+            var material = new THREE.MeshStandardMaterial({
+                color:'rgb(120,120,120)'
+            });
+            var mesh = new THREE.Mesh(geometry,material);
+            mesh.receiveShadow = true; // For recieving Shadows
+            return mesh;
+        }
+
         function getPointLight(intensity) {
             var light = new THREE.PointLight(0xFFFFFF, intensity);
             light.castShadow = true;
@@ -126,14 +141,12 @@ h1 {
         }
         function getSphere(size) {
             var geometry = new THREE.SphereGeometry(size,24,24);
-            var material = new THREE.MeshBasicMaterial({
-                color:'rgb(255,255,255)'
-            });
+            var material = new THREE.MeshBasicMaterial({color:'rgb(255,255,255)'});
             var mesh = new THREE.Mesh(geometry,material);
             return mesh;
         }
         function getRectLight(i,w,h) {
-            var rectLight = new THREE.RectAreaLight( 0xffffff, i, w, h );
+            var rectLight = new THREE.RectAreaLight( 'rgb(255, 255, 255)', i, w, h );
             rectLight.position.set( 0,2,0);
             rectLight.lookAt( box.position);
             // rectLight.castShadow = true;
