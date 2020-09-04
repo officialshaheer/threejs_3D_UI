@@ -1,0 +1,26 @@
+{
+  "name": "threejs_3d_ui",
+  "version": "1.0.0",
+  "description": "Simple 3D web page",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {
+    "three": "^0.120.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/officialshaheer/threejs_3D_UI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/officialshaheer/threejs_3D_UI/issues"
+  },
+  "homepage": "https://github.com/officialshaheer/threejs_3D_UI#readme"
+}
