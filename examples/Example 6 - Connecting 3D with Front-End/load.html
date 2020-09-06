@@ -24,6 +24,45 @@ h1 {
     border: 5px solid black;
     padding: .2em;
   }
+button {
+  border-radius: 4px;
+  background-color: #4CAF50;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+button:hover span {
+  padding-right: 25px;
+}
+
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+  
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -33,6 +72,10 @@ h1 {
 <center>
 <p style="font-size:25px;color: white;">UST Global</p>
 </center>	
+</div>
+
+<div style="width: 110px;height: auto;background-color: black;position: fixed;opacity: 0.8;">
+    <button id="lightSwitcher"><span>Lights</span></button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.120.1/build/three.js"></script>
@@ -48,16 +91,11 @@ h1 {
 
 	  	var scene = new THREE.Scene();
         var gui = new dat.GUI();
-        // FOG in Scene
-        var enableFog = true;
-
-        if(enableFog) {
-            scene.fog = new THREE.FogExp2(0xEE0000, 0.2);
-        }
-
-
+          // FOG in Scene
+        
         // var box = getBox(1, 1, 1);
         var plane = getPlane(20);
+        var lightStatusSwitch ;
 
         var pointLight = getPointLight(0.5);
         var pointLight2 = getPointLight2(0.5);
@@ -69,7 +107,7 @@ h1 {
         var sphere3 = getSphere3(1);
         var sphere4 = getSphere4(1);
 
-        var rectLight1 = getRectLight1(1,1,1); //Realistic Light
+        var rectLight1 = getRectLight1(2,1,1); //Realistic Light
         var rectLight2 = getRectLight2(2,1,1);
         var rectLight3 = getRectLight3(2,1,1);  
 
@@ -122,7 +160,7 @@ h1 {
 
         scene.add(plane);
 
-        scene.add(rectLight1);
+        // scene.add(rectLight1);
         // scene.add(rectLight2);
         // scene.add(rectLight3);
         
@@ -250,6 +288,32 @@ h1 {
             rectLight3.position.set( 0,0,0);
             return rectLight3;
         }
+
+        function lightsOn(){
+                scene.add( pointLight );
+                scene.add( pointLight2 );
+                scene.add( pointLight3 );
+                scene.add( pointLight4 );
+                lightStatusSwitch = true;
+            }
+
+            function lightsOff(){
+                scene.remove( pointLight );
+                scene.remove( pointLight2 );
+                scene.remove( pointLight3 );
+                scene.remove( pointLight4 );
+                lightStatusSwitch = false;
+            }
+
+        // UI Connection for turning on Light
+        var btnForLight = document.getElementById("lightSwitcher");
+            btnForLight.addEventListener('click', function() {
+                if (lightStatusSwitch) {
+                    lightsOff();
+                } else {
+                    lightsOn();
+                }
+            }, true);
 
 
         // Initialising renderer & Fixing the resizing of object with below function

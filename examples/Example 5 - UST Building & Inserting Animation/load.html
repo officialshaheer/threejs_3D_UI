@@ -48,14 +48,8 @@ h1 {
 
 	  	var scene = new THREE.Scene();
         var gui = new dat.GUI();
-        // FOG in Scene
-        var enableFog = true;
-
-        if(enableFog) {
-            scene.fog = new THREE.FogExp2(0xEE0000, 0.2);
-        }
-
-
+          // FOG in Scene
+        
         // var box = getBox(1, 1, 1);
         var plane = getPlane(20);
 
@@ -69,7 +63,7 @@ h1 {
         var sphere3 = getSphere3(1);
         var sphere4 = getSphere4(1);
 
-        var rectLight1 = getRectLight1(1,1,1); //Realistic Light
+        var rectLight1 = getRectLight1(2,1,1); //Realistic Light
         var rectLight2 = getRectLight2(2,1,1);
         var rectLight3 = getRectLight3(2,1,1);  
 
