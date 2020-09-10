@@ -7,6 +7,7 @@
     "example": "examples"
   },
   "dependencies": {
+    "http-server": "^0.12.3",
     "three": "^0.120.1"
   },
   "devDependencies": {},
