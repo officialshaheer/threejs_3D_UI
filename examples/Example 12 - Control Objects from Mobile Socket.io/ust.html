@@ -216,7 +216,7 @@
                 } );
             var userSphere = new THREE.Mesh( geometry, material );
             userSphere.castShadow = true;
-            userSphere.position.set(0,0.5,2);
+            userSphere.position.set(0,0.10,2);
             return userSphere;
         }
 
@@ -295,7 +295,7 @@
         var socket = io();
 
           socket.on('connect', () => {
-            var Player = getUserSphere(0.5,15,15);
+            var Player = getUserSphere(0.10,15,15);
             scene.add(Player);
 
             // Emitting to everybody

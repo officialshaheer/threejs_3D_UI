@@ -24,8 +24,8 @@ io.on('connection', (socket) => {
 	var id = socket.id;
     world.addPlayer(id);
     console.log(world.players);
-
 	console.log(id);
+	
 	// Starting Socket when a user entered the url
 	socket.on('userstatus', (status) => {
 		io.emit('userstatusreciever', status);
